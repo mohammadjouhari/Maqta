@@ -1,0 +1,56 @@
+﻿@page
+@model Maqta.Pages.EditEmployeeModel
+@{
+}
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Maqta</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Maqta.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Maqta</a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <h1>Add Employee</h1>
+            <form method="post">
+                <input type="text" style="display:none;" name="Id" value="@Model.Employee.ID" />
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" value="@Model.Employee.FirstName" name="name" id="name" placeholder="Enter Name">
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" value="@Model.Employee.Email" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="email">Mobile</label>
+                    <input type="text" class="form-control" value="@Model.Employee.Mobile" name="mobile" id="mobile" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <br />
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
+
+
+
+
+
+
