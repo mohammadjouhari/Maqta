@@ -13,10 +13,11 @@ namespace API.Controllers
         //Test from githup;
         //Test;
         //Test;
-        public IUnitOfWork unitOfWork { get; set; }
         private readonly IMapper _mapper;
         public IEmployeeRepositoryAdoNet repositoryEmployeeAdoNet;
         private readonly IMapperSession _session;
+        private readonly IUnitOfWork unitOfWork;
+
         public EmployeeController(
             IUnitOfWork UnitOfWork, 
             IMapper mapper, 
