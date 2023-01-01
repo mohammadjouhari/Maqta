@@ -1,8 +1,4 @@
 using Maqta.Services;
-//if (System.Diagnostics.Debugger.IsAttached)
-//{
-//    System.Threading.Thread.Sleep(8000);
-//}
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();

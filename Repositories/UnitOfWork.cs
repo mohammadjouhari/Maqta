@@ -1,4 +1,6 @@
 ﻿using Entity;
+using Microsoft.EntityFrameworkCore;
+
 namespace Repositories
 {
     public class UnitOfWork : IUnitOfWork, IDisposable

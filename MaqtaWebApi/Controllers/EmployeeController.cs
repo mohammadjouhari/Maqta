@@ -1,25 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Repositories;
 using AutoMapper;
+using Ado.NetSqlHelper;
+using NHibernate_Access.NHibernateEntity;
+
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : Controller
     {
+        //Test;
         public IUnitOfWork unitOfWork { get; set; }
         private readonly IMapper _mapper;
-
-        public EmployeeController(IUnitOfWork UnitOfWork, IMapper mapper)
+        public IEmployeeRepositoryAdoNet repositoryEmployeeAdoNet;
+        private readonly IMapperSession _session;
+        public EmployeeController(
+            IUnitOfWork UnitOfWork, 
+            IMapper mapper, 
+            IEmployeeRepositoryAdoNet repositoryEmployeeAdoNet,
+            IMapperSession session)
         {
+            _session = session;
             unitOfWork = UnitOfWork;
             _mapper = mapper;
+            this.repositoryEmployeeAdoNet = repositoryEmployeeAdoNet;
         }
 
         [Route("[action]")]
         [HttpGet]
         public IActionResult List()
         {
+           // var s = _session.Employees.ToList();
             var entitiy = unitOfWork.Employee.GetAll();
             var dtoModel = _mapper.Map<List<DTO.Employee>>(entitiy);
             return Ok(dtoModel.Where(s => s.IsDeleted != true).ToList());
@@ -102,7 +114,10 @@ namespace API.Controllers
             {
                 return BadRequest
                 (
-                    new { ErrorMessage = "ID is not valid" }
+                    new 
+                    { 
+                        ErrorMessage = "ID is not valid" 
+                    }
                 );
             }
         }
