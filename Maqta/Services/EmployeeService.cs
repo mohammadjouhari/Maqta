@@ -1,9 +1,6 @@
 ﻿using DTO;
 using Newtonsoft.Json;
-using System.Collections.Specialized;
 using System.Net;
-using System.Net.Http.Headers;
-using System.Text;
 
 namespace Maqta.Services
 {
