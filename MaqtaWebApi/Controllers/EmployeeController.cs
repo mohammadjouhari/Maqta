@@ -32,6 +32,7 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult List()
         {
+            //Tets;
            // var s = _session.Employees.ToList();
             var entitiy = unitOfWork.Employee.GetAll();
             var dtoModel = _mapper.Map<List<DTO.Employee>>(entitiy);
