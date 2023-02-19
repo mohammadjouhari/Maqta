@@ -25,6 +25,7 @@ namespace API.Controllers
             ISeriLog seriLog)
         {
             //Tets;
+            //Testl
             unitOfWork = UnitOfWork;
             _mapper = mapper;
             this.configuration = configuration;
