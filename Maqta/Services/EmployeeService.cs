@@ -6,12 +6,10 @@ namespace Maqta.Services
 {
     public class EmployeeService : IEmployeeService
     {
-     
-        //
         public IEnumerable<Employee> GetAll()
         {
-            var apiUrl = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["BaseUrl"] + 
-                "/api/Employee/List";
+            var apiUrl = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["BaseUrl"] +
+                "/api/Emp/List?shouldLog=false";
             WebClient client = new WebClient();
             var response = client.DownloadString(apiUrl);
             List<DTO.Employee> employees = JsonConvert.DeserializeObject<List<DTO.Employee>>(response);

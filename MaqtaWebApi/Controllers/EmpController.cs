@@ -1,24 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Repositories;
-using AutoMapper;
-using NHibernate_Access.NHibernateEntity;
 
-namespace API.Controllers
+namespace MaqtaWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : Controller
+    public class EmpController : ControllerBase
     {
+
         private readonly IMapper _mapper;
-        private readonly IMapperSession _session;
         private readonly IUnitOfWork unitOfWork;
 
-        public EmployeeController(
-            IUnitOfWork UnitOfWork, 
-            IMapper mapper, 
-            IMapperSession session)
+        public EmpController(
+            IUnitOfWork UnitOfWork,
+            IMapper mapper)
         {
-            _session = session;
             unitOfWork = UnitOfWork;
             _mapper = mapper;
         }
@@ -101,7 +98,7 @@ namespace API.Controllers
                 entity.DeletedDate = DateTime.UtcNow;
                 entity.DeleteUserID = 2;
                 entity.IsDeleted = true;
-                unitOfWork.Employee.Update(entity);     
+                unitOfWork.Employee.Update(entity);
                 unitOfWork.Complete();
                 unitOfWork.Clear();
                 return Ok();
@@ -110,13 +107,12 @@ namespace API.Controllers
             {
                 return BadRequest
                 (
-                    new 
-                    { 
-                        ErrorMessage = "ID is not valid" 
+                    new
+                    {
+                        ErrorMessage = "ID is not valid"
                     }
                 );
             }
         }
     }
-
 }

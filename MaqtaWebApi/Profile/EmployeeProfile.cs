@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-namespace API.Profiles
+namespace MaqtaWebApi.Profiles
 { 
 
     public class EmployeeProfile : Profile

@@ -7,9 +7,7 @@ namespace Repositories
         private readonly DBContext context; 
         public Repository(DBContext context)
         {
-            
             this.context = context;
-            
         }
         public IEnumerable<T> GetAll()
         {

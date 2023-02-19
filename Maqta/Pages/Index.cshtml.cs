@@ -6,15 +6,13 @@ namespace Maqta.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
         private readonly IEmployeeService employeeService;
 
         [BindProperty]
         public List<DTO.Employee> Allemployees { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger, IEmployeeService employeeService)
-        {
-            _logger = logger;
+        public IndexModel(IEmployeeService employeeService)
+        { 
             this.employeeService = employeeService;
         }
 

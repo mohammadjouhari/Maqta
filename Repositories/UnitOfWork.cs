@@ -1,5 +1,4 @@
 ﻿using Entity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Repositories
 {
@@ -7,6 +6,7 @@ namespace Repositories
     {
         readonly DBContext _dbContext;
         public IRepositoryEmployee Employee { get; set; }
+        
 
         public UnitOfWork(DBContext dbContext)
         {
@@ -16,13 +16,11 @@ namespace Repositories
 
         public void Complete()
         {
-            _dbContext.SaveChanges();
-            
+            _dbContext.SaveChanges(); 
         }
 
         public void Dispose()
         {
-            
             _dbContext.Dispose();
         }
 

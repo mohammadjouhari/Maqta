@@ -4,6 +4,10 @@ namespace Entity
 {
     public class Employee : BaseEntity
     {
+        public Employee()
+        {
+            Bank = new EmployeeBank();
+        }
         public string EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
@@ -24,6 +28,8 @@ namespace Entity
         public string SecondSecurityNO { get; set; }
         public string MaterialStatus { get; set; }
         public bool NoBrothersAllowed { get; set; }
+
+        public EmployeeBank Bank { get; set; }
     }
   
 }

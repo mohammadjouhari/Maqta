@@ -20,21 +20,14 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
-app.UseSwagger(c =>
-{
-    c.RouteTemplate = "/swagger/{documentName}/swagger.json";
-});
+app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MatqaWebApi"));
-app.UseSwaggerUI(c => {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "MatqaWebApi");
-    c.RoutePrefix = "swagger";
-});
 app.UseDeveloperExceptionPage();
 app.UseAuthorization();
 app.UseAuthentication();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=EmployeeController}/{action=list}/{id?}");
+    pattern: "{controller=EmpController}/{action=list}/{id?}");
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.UseRouting();

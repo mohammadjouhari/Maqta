@@ -1,7 +1,4 @@
-﻿
-
-using FluentValidation;
-
+﻿using FluentValidation;
 namespace DTO
 {
     public class Employee : BaseEntity
