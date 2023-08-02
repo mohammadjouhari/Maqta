@@ -1,18 +1,30 @@
 ﻿using Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 namespace Repositories
 {
     public class Repository<T> : IRepository<T> where T : class 
     {
-        private readonly DBContext context; 
+        public DBContext context; 
         public Repository(DBContext context)
         {
             this.context = context;
         }
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(bool enablelazyloading)
         {
-            context.Set<T>();
-            return context.Set<T>();
+            IEnumerable<T> result = new List<T>();
+            if (enablelazyloading)
+            {
+                context.ChangeTracker.LazyLoadingEnabled = enablelazyloading;
+                result = context.Set<T>().ToList();
+
+            }
+            else
+            {
+                context.ChangeTracker.LazyLoadingEnabled = false;
+                result = context.Set<T>().ToList();
+            }
+            return result;
         }
         public T Get(int id)
         {
@@ -29,6 +41,14 @@ namespace Repositories
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
             return context.Set<T>().Where(predicate);
+        }
+        public IEnumerable<T> GetAllv1()
+        {
+            return context.Set<T>().AsEnumerable();
+        }
+        public IQueryable<T> GetAllv2()
+        {
+            return context.Set<T>();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-
 namespace API.Profiles
 {
     public class EmpProfile:Profile

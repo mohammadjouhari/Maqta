@@ -1,8 +1,11 @@
-﻿using FluentValidation;
+﻿using System.ComponentModel.DataAnnotations;
+
 namespace DTO
 {
-    public class Employee : BaseEntity
+    public class Employee 
     {
+        [Key]
+        public int Id { get; set; }
         public string EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
@@ -23,26 +26,6 @@ namespace DTO
         public string SecondSecurityNO { get; set; }
         public string MaterialStatus { get; set; }
         public bool NoBrothersAllowed { get; set; }
-    }
-
-    public class EmployeeValidator : AbstractValidator<Employee>
-    {
-        public EmployeeValidator()
-        {
-            RuleFor(p => p.FirstName).NotEmpty().WithMessage("{PropertyName} should be not empty. NEVER!");
-            RuleFor(p => p.SecondName).NotEmpty().WithMessage("{PropertyName} should be not empty. NEVER!");
-            RuleFor(p => p.ThirdName).NotEmpty().WithMessage("{PropertyName} should be not empty. NEVER!");
-            RuleFor(p => p.LastName).NotEmpty().WithMessage("{PropertyName} should be not empty. NEVER!");
-            RuleFor(p => p.Email).NotEmpty().WithMessage("{PropertyName} should be not empty. NEVER!");
-            RuleFor(p => p.Mobile).NotEmpty().WithMessage("{PropertyName} should be not empty. NEVER!");
-            RuleFor(p => p.DateOfBirth).NotEmpty().WithMessage("{PropertyName} should be not empty. NEVER!");
-            RuleFor(p => p.Gender).NotEmpty().WithMessage("{PropertyName} should be not empty. NEVER!");
-            RuleFor(p => p.Nationality).NotEmpty().WithMessage("{PropertyName} should be not empty. NEVER!");
-            RuleFor(p => p.PassportNumber).NotEmpty().WithMessage("{PropertyName} should be not empty. NEVER!");
-            RuleFor(p => p.MaterialStatus).NotEmpty().WithMessage("{PropertyName} should be not empty. NEVER!");
-            RuleFor(p => p.NoBrothersAllowed).NotEmpty().WithMessage("{PropertyName} should be not empty. NEVER!");
-            RuleFor(p => p.MotherName).NotEmpty().WithMessage("{PropertyName} should be not empty. NEVER!");
-
-        }
+        public bool IsDeleted { get; set; }
     }
 }

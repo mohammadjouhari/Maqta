@@ -1,11 +1,9 @@
-using Maqta.Services;
 using Microsoft.Data.SqlClient;
 using System.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
-builder.Services.AddTransient<IEmployeeService, EmployeeService>();
-builder.Services.AddTransient<IDbConnection>(DbConnection => new SqlConnection(
-builder.Configuration.GetConnectionString("HrSoultion")));
+var conncString = builder.Configuration.GetConnectionString("HrSoultion");
+builder.Services.AddTransient<IDbConnection>(db => new SqlConnection(conncString);
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
@@ -14,8 +12,10 @@ if (!app.Environment.IsDevelopment())
 }
 app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();
+app.UseWebSockets();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
 app.Run();

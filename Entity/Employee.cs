@@ -1,13 +1,11 @@
-﻿using Entity;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Entity
 {
-    public class Employee : BaseEntity
+    public class Employee
     {
-        public Employee()
-        {
-            Bank = new EmployeeBank();
-        }
+        [Key]
+        public int Id { get; set; }
         public string EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
@@ -28,8 +26,8 @@ namespace Entity
         public string SecondSecurityNO { get; set; }
         public string MaterialStatus { get; set; }
         public bool NoBrothersAllowed { get; set; }
+        public bool IsDeleted { get; set; }
 
-        public EmployeeBank Bank { get; set; }
     }
   
 }

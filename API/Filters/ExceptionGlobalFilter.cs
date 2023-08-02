@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-
 namespace API.Filters
 {
     public class ExceptionGlobalFilter: ExceptionFilterAttribute
@@ -7,11 +6,11 @@ namespace API.Filters
         private readonly ISeriLog seriLog;
         public ExceptionGlobalFilter(ISeriLog seriLog)
         {
-            seriLog = seriLog;
             this.seriLog = seriLog;
         }
         public override void OnException(ExceptionContext context)
         {
+            context.ExceptionHandled = true;
             seriLog.Log(context.Exception.Message);
             base.OnException(context);
         }

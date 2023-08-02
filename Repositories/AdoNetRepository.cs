@@ -1,9 +1,7 @@
 ﻿using Ado.NetSqlHelper;
-using DTO;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using static Ado.NetSqlHelper.SqlDataReaderExtensions;
-
 namespace Repositories
 {
     public class AdoNetRepository : IAdoNetRepository
@@ -15,14 +13,14 @@ namespace Repositories
 
         public IConfiguration Configuration { get; }
 
-        public List<Employee> GetAllEmployess()
+        public List<Entity.Employee> GetAllEmployess()
         {
-            var entitiyAdoNet = SqlHelper1.ExecuteReader(Configuration.GetConnectionString("HrSoultion"),
-                 CommandType.Text, "select * from employee", null);
-            List<DTO.Employee> employees = new List<DTO.Employee>();
-            employees = DataReaderMapToList<Employee>(entitiyAdoNet);
-            entitiyAdoNet.Close();
-            entitiyAdoNet.Dispose();
+            var connectionString = Configuration.GetConnectionString("HrSoultion");
+            var reader = SqlHelper.ExecuteReader(connectionString,CommandType.Text, "select * from employee", null);
+            List<Entity.Employee> employees = new List<Entity.Employee>(); 
+            employees = DataReaderMapToList<Entity.Employee>(reader);
+            reader.Close();
+            reader.Dispose();
             return employees;
         }
     }

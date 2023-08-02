@@ -2,6 +2,6 @@
 {
     public interface IAdoNetRepository
     {
-        List<DTO.Employee> GetAllEmployess();
+        List<Entity.Employee> GetAllEmployess();
     }
 }

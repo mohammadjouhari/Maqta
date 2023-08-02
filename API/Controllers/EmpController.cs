@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using Dapper;
+using Entity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Caching.Memory;
 using Repositories;
-using System.Data;
 
 namespace API.Controllers
 {
@@ -14,69 +13,59 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IConfiguration configuration;
         private readonly IAdoNetRepository adoNetRepository;
-        private readonly ISeriLog seriLog;
         private readonly IUnitOfWork unitOfWork;
+        private readonly IDapperRepository dapperRepository;
 
         public EmpController(
             IUnitOfWork UnitOfWork,
             IMapper mapper,
             IConfiguration configuration, 
             IAdoNetRepository adoNetRepository, 
-            ISeriLog seriLog)
+            ISeriLog seriLog,
+            IMemoryCache cache,
+            IDapperRepository dapperRepository
+            )
         {
-            //Tets;
-            //Testl
             unitOfWork = UnitOfWork;
             _mapper = mapper;
             this.configuration = configuration;
             this.adoNetRepository = adoNetRepository;
-            this.seriLog = seriLog;
+            this.dapperRepository = dapperRepository;
         }
+
 
         [Route("[action]")]
         [HttpGet]
-        public IActionResult List(bool shouldLog= true)
+        public IActionResult List()
         {
-            var entitiy = unitOfWork.Employee.GetAll();
-            var dtoModel = _mapper.Map<List<DTO.Employee>>(entitiy);
-            var dtoModel2 = adoNetRepository.GetAllEmployess();
-            IDbConnection db = new SqlConnection(configuration.GetConnectionString("HrSoultion"));
-            var dtoModel3 = db.Query<DTO.Employee>("select * from employee").ToList();
-            if(shouldLog)
-            {
-                seriLog.Log(dtoModel3.Count.ToString());
-            }
-            db.Dispose();
+            var entity = unitOfWork.Employee.GetAllv2().ToList();
+            var entity2 = unitOfWork.Employee2.GetAllv2().ToList();
+            var dtoModel = new List<DTO.Employee>();
+            dtoModel = _mapper.Map<List<DTO.Employee>>(entity2);
             return Ok(dtoModel);
         }
+
+        [Route("[action]")] 
+        [HttpGet]
+        public JsonResult List2(bool shouldLog = true, int pageNumber = 0, int pageSize = 10)
+        {
+            dapperRepository.GetAllEmployess();
+            var dtoModel = new List<DTO.Employee>();
+            var entity2 = unitOfWork.Employee.GetAllv2();
+            dtoModel = _mapper.Map<List<DTO.Employee>>(entity2);
+            return new JsonResult(dtoModel);
+        }
+
 
         [Route("[action]")]
         [HttpPost]
         public IActionResult Add(DTO.Employee dtoModel)
         {
             var entitiy = _mapper.Map<Entity.Employee>(dtoModel);
-            entitiy.ModifiedDate = null;
-            entitiy.CreationUserID = 1;
-            entitiy.ModifyUserID = null;
-            entitiy.DeleteUserID = null;
-            entitiy.IsDeleted = false;
-            entitiy.DeletedDate = null;
-            entitiy.Bank = new Entity.EmployeeBank();
-            entitiy.Bank.EmployeeId = dtoModel.EmployeeId;
-            entitiy.Bank.Iban = "";
-            entitiy.Bank.IsActive = false;
-            entitiy.Bank.DeletedDate = DateTime.UtcNow;
-            entitiy.Bank.DeleteUserID = -1;
-            entitiy.Bank.ModifiedDate = DateTime.UtcNow;
-            entitiy.Bank.CreationUserID = -1;
-            entitiy.Bank.ModifiedDate = DateTime.UtcNow;
-            entitiy.Bank.IsDeleted = false;
-            entitiy.Bank.DeletedDate = DateTime.UtcNow;
-            entitiy.Bank.Name = "";
             unitOfWork.Employee.Insert(entitiy);
             unitOfWork.Complete();
             unitOfWork.Clear();
-            return Ok(entitiy);
+            return Ok(dtoModel);
         }
 
         [Route("[action]")]
@@ -84,35 +73,43 @@ namespace API.Controllers
         public IActionResult GetEmployee(int id)
         {
             var entity = unitOfWork.Employee.Get(id);
+            var entity2 = unitOfWork.Employee.GetAll(true).ToList().SingleOrDefault(Employee=> Employee.Id == id);
+            unitOfWork.Employee.Update(entity);
+            unitOfWork.Employee.Update(entity);
+            unitOfWork.Enable();
             var dtoModel2 = _mapper.Map<Entity.Employee>(entity);
             unitOfWork.Complete();
-            unitOfWork.Clear();
             return Ok(dtoModel2);
         }
 
         [Route("[action]")]
         [HttpPost]
-        public IActionResult Edit(DTO.Employee dtoModel)
+        public IActionResult Edit([FromForm] dynamic obj)
         {
-            var entity = unitOfWork.Employee.Get(dtoModel.ID);
+            var returnUrl = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["BaseUrlWeb"] +"Index1";
+            var dtoModel = new DTO.Employee();
+            var id = int.Parse(Request.Form["id"].ToString());
+            var firstName = Request.Form["name"];
+            var email = Request.Form["email"];
+            var mobile = Request.Form["mobile"];
+            var entity = unitOfWork.Employee.Get(id);
+            unitOfWork.Employee.GetAll(true);
             unitOfWork.Clear();
             if (entity != null)
             {
-                entity = _mapper.Map<Entity.Employee>(dtoModel);
-                entity.ModifiedDate = DateTime.UtcNow;
-                entity.ModifyUserID = 2;
+                entity.FirstName = firstName;
+                entity.Email = email.ToString();
+                entity.Mobile = mobile;
+                dtoModel = _mapper.Map<DTO.Employee>(entity);
+                dtoModel.EmployeeId = id.ToString();
                 unitOfWork.Employee.Update(entity);
                 unitOfWork.Complete();
                 unitOfWork.Clear();
-                return Ok(dtoModel);
+                return Redirect(returnUrl);
             }
             else
             {
-                return BadRequest(new
-                {
-                    ErrorMessage = "ID is not valid"
-                }
-                );
+                return BadRequest();
             }
         }
 
@@ -120,18 +117,13 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult delete(int id)
         {
+            unitOfWork.Enable();
             var entity = unitOfWork.Employee.Get(id);
-            unitOfWork.Clear();
+            entity.IsDeleted = true;
             if (entity != null)
             {
-                entity.ModifiedDate = DateTime.UtcNow;
-                entity.ModifyUserID = 2;
-                entity.DeletedDate = DateTime.UtcNow;
-                entity.DeleteUserID = 2;
-                entity.IsDeleted = true;
                 unitOfWork.Employee.Update(entity);
                 unitOfWork.Complete();
-                unitOfWork.Clear();
                 return Ok();
             }
             else
@@ -144,22 +136,6 @@ namespace API.Controllers
                     }
                 );
             }
-        }
-        [Route("[action]")]
-        [HttpGet]
-        public JsonResult A()
-        {
-
-            //TODO: user now contains the details, you can do required operations  
-            var rng = new Random();
-            var result = Enumerable.Range(1, 5).Select(index => new 
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = ""
-            })
-            .ToArray();
-            return new JsonResult(result);
         }
 
     }
