@@ -6,4 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+<<<<<<< HEAD
+=======
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.2.1" />
+  </ItemGroup>
+
+>>>>>>> 7f5fe51 (Added my project)
 </Project>

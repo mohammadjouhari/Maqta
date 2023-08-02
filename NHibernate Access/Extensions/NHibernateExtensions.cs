@@ -14,7 +14,10 @@ namespace NHibernate_Access.Extensions
             var mapper = new ModelMapper();
             mapper.AddMappings(typeof(NHibernateExtensions).Assembly.ExportedTypes);
             HbmMapping domainMapping = mapper.CompileMappingForAllExplicitlyAddedEntities();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7f5fe51 (Added my project)
             var configuration = new Configuration();
             configuration.DataBaseIntegration(c =>
             {

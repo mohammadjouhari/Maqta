@@ -36,6 +36,12 @@ namespace Entity.Migrations
                     b.Property<int>("CreationUserID")
                         .HasColumnType("int");
 
+<<<<<<< HEAD
+=======
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+>>>>>>> 7f5fe51 (Added my project)
                     b.Property<int?>("DeleteUserID")
                         .HasColumnType("int");
 
@@ -46,13 +52,54 @@ namespace Entity.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+<<<<<<< HEAD
+=======
+                    b.Property<string>("EmployeeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+>>>>>>> 7f5fe51 (Added my project)
                     b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+<<<<<<< HEAD
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+=======
+                    b.Property<string>("ForeignFirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ForeignLastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ForeignSecondNamee")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ForeignThirdNamee")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaterialStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+>>>>>>> 7f5fe51 (Added my project)
                     b.Property<string>("Mobile")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -63,6 +110,40 @@ namespace Entity.Migrations
                     b.Property<int?>("ModifyUserID")
                         .HasColumnType("int");
 
+<<<<<<< HEAD
+=======
+                    b.Property<string>("MotherName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nationality")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("NoBrothersAllowed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PassportNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecondName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecondSecurityNO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ThirdName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+>>>>>>> 7f5fe51 (Added my project)
                     b.HasKey("ID");
 
                     b.ToTable("Employee");

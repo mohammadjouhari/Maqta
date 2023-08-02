@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Repositories;
 using AutoMapper;
+<<<<<<< HEAD
 using Ado.NetSqlHelper;
+=======
+>>>>>>> 7f5fe51 (Added my project)
 using NHibernate_Access.NHibernateEntity;
 
 namespace API.Controllers
@@ -10,36 +13,53 @@ namespace API.Controllers
     [ApiController]
     public class EmployeeController : Controller
     {
+<<<<<<< HEAD
         //Test from githup;
         //Test;
         //Test;
         // Testv2;
         private readonly IMapper _mapper;
         public IEmployeeRepositoryAdoNet repositoryEmployeeAdoNet;
+=======
+        private readonly IMapper _mapper;
+>>>>>>> 7f5fe51 (Added my project)
         private readonly IMapperSession _session;
         private readonly IUnitOfWork unitOfWork;
 
         public EmployeeController(
             IUnitOfWork UnitOfWork, 
             IMapper mapper, 
+<<<<<<< HEAD
             IEmployeeRepositoryAdoNet repositoryEmployeeAdoNet,
+=======
+>>>>>>> 7f5fe51 (Added my project)
             IMapperSession session)
         {
             _session = session;
             unitOfWork = UnitOfWork;
             _mapper = mapper;
+<<<<<<< HEAD
             this.repositoryEmployeeAdoNet = repositoryEmployeeAdoNet;
+=======
+>>>>>>> 7f5fe51 (Added my project)
         }
 
         [Route("[action]")]
         [HttpGet]
         public IActionResult List()
         {
+<<<<<<< HEAD
             //Tets;
            // var s = _session.Employees.ToList();
             var entitiy = unitOfWork.Employee.GetAll();
             var dtoModel = _mapper.Map<List<DTO.Employee>>(entitiy);
             return Ok(dtoModel.Where(s => s.IsDeleted != true).ToList());
+=======
+            // Tets;
+            var entitiy = unitOfWork.Employee.GetAll();
+            var dtoModel = _mapper.Map<List<DTO.Employee>>(entitiy);
+            return Ok(dtoModel);
+>>>>>>> 7f5fe51 (Added my project)
         }
 
         [Route("[action]")]

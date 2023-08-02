@@ -7,6 +7,10 @@ namespace Maqta.Services
     public class EmployeeService : IEmployeeService
     {
      
+<<<<<<< HEAD
+=======
+        //
+>>>>>>> 7f5fe51 (Added my project)
         public IEnumerable<Employee> GetAll()
         {
             var apiUrl = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["BaseUrl"] + 

@@ -8,7 +8,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+<<<<<<< HEAD
 builder.Services.AddTransient<IEmployeeRepositoryAdoNet, RepositoryEmployeeAdoNet>();
+=======
+>>>>>>> 7f5fe51 (Added my project)
 builder.Services.AddDbContextPool<DBContext>(Options =>
 {
     Options.UseSqlServer(builder.Configuration.GetConnectionString("HrSoultion"));

@@ -7,7 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
     <ProjectReference Include="..\..\..\..\Ado.NetSqlHelper\Ado.NetSqlHelper.csproj" />
+=======
+>>>>>>> 7f5fe51 (Added my project)
     <ProjectReference Include="..\DTO\DTO.csproj" />
     <ProjectReference Include="..\Entity\Entity.csproj" />
   </ItemGroup>

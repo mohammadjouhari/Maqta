@@ -1,9 +1,12 @@
 ﻿using NHibernate;
+<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+=======
+>>>>>>> 7f5fe51 (Added my project)
 
 namespace NHibernate_Access.NHibernateEntity
 {
